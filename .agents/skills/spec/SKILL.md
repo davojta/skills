@@ -55,8 +55,11 @@ Module = a top-level package or folder under the source root (e.g. `src/<pkg>/`)
 
 - Argument is a path to an existing `input.md`: write all docs next to it, in its folder.
   Do not touch `input.md`.
-- Argument is free text: `docs/tasks/<YYYY-MM-DD>-<slug>/`. Use today's date. Slug is short
-  kebab-case.
+- Argument is free text: check `docs/tasks/` in the repo.
+  - It exists and is not empty: write to `docs/tasks/<YYYY-MM-DD>-<slug>/`.
+  - Missing or empty: call `AskUserQuestion` before writing. Options: `docs/tasks/<YYYY-MM-DD>-<slug>/`
+    in this repo (Recommended), or a separate folder the user names (via "Other").
+  - Use today's date. Slug is short kebab-case.
 
 If `docs/tasks/ledger.toml` exists, also write `task.md` (template: `templates/task.md`).
 Set `parent:` when the change belongs to an umbrella task.
