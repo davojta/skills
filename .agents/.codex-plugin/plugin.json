@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "Dzianis Sheka Skills",
     "shortDescription": "Size-based specs and grug-style code review",
-    "longDescription": "Spec sizes a change and writes only the spec docs that fit it, from a plan to research, proposal, design, tasks, and validation. Review checks a diff for proven bugs and for code a tired developer cannot follow at 3 AM. The grug agent gives a simplicity second opinion.",
+    "longDescription": "Spec sizes a change and writes only the spec docs that fit it, from a plan to research, proposal, design, tasks, and validation. Grug review checks a diff for proven bugs and for code a tired developer cannot follow at 3 AM, and splits big diffs across parallel big-grug agents. The grug agent gives a simplicity second opinion.",
     "developerName": "Dzianis Sheka",
     "category": "Developer Tools",
     "capabilities": [

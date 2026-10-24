@@ -3,17 +3,23 @@
 | Skill | Description |
 | --- | --- |
 | [`spec`](.agents/skills/spec/SKILL.md) | Size a change (simple / smol / medium / big) and write only the spec docs that fit it. |
-| [`review`](.agents/skills/review/SKILL.md) | Review a diff for proven bugs and for code a tired developer cannot follow at 3 AM. Inspired by [`grug-review`](https://github.com/stepankuzmin/skills/blob/main/.agents/skills/grug-review/SKILL.md) and [The Grug Brained Developer](https://grugbrain.dev/). |
+| [`grug-review`](.agents/skills/grug-review/SKILL.md) | Review a diff for proven bugs and for code a tired developer cannot follow at 3 AM. Small diffs (1–15 files) go to one `grug` agent; big ones go to parallel `big-grug` agents, one per batch. Inspired by [`grug-review`](https://github.com/stepankuzmin/skills/blob/main/.agents/skills/grug-review/SKILL.md) and [The Grug Brained Developer](https://grugbrain.dev/). |
 
-The `grug` agent gives a simplicity second opinion and uses `review` for diffs.
+Agents:
+
+- `grug` gives a simplicity second opinion and reviews small diffs.
+- `big-grug` reviews one batch of a big diff.
+
+Both rate findings with 12 pains (checked against *A Philosophy of Software Design* and *Tidy First?*), the Grug Scale, and a 0–10 grade.
 
 ## Sources
 
-- [stepankuzmin/skills#7c3fa2c0275bcee7c1633a3ab6b0374e1a059b6e](https://github.com/stepankuzmin/skills/tree/7c3fa2c0275bcee7c1633a3ab6b0374e1a059b6e/.agents): repo layout, `cli.ts`, `grug` agent; `review` is inspired by `grug-review`
+- [stepankuzmin/skills#7c3fa2c0275bcee7c1633a3ab6b0374e1a059b6e](https://github.com/stepankuzmin/skills/tree/7c3fa2c0275bcee7c1633a3ab6b0374e1a059b6e/.agents): repo layout, `cli.ts`, `grug` agent; `grug-review` adapts its `grug-review` skill
+- Stepan Kuzmin's `grug` Claude Code plugin: `big-grug` agent and the big-review batching flow
 
 ## Install
 
-Claude Code and Codex install the whole `ds` plugin: `spec`, `review`, and the `grug` agent. Only the Skills CLI can install a single skill.
+Claude Code and Codex install the whole `ds` plugin: `spec`, `grug-review`, and the `grug` and `big-grug` agents. Only the Skills CLI can install a single skill.
 
 ### spec only
 
@@ -23,12 +29,12 @@ Skills CLI:
 npx skills add davojta/skills --skill spec
 ```
 
-### review and grug
+### grug-review and agents
 
-Skills CLI (skill only, no agent):
+Skills CLI (skill only, no agents; it reviews inline with the `grug` rules):
 
 ```bash
-npx skills add davojta/skills --skill review
+npx skills add davojta/skills --skill grug-review
 ```
 
 ### Whole plugin
@@ -86,11 +92,12 @@ With a free-form `input.md` kept outside the repo, force the `medium` tier:
 
 With free text, docs go to `docs/tasks/<date>-<slug>/` if the repo already has `docs/tasks/`. If it does not, the skill asks whether to create that folder or use one you name.
 
-### review
+### grug-review
 
 ```bash
-/ds:review                            # review the current diff
-/ds:review 42                         # review PR #42
+/ds:grug-review                       # review the current diff; skill picks small or big
+/ds:grug-review 42                    # review PR #42
+/ds:grug-review big 42                # force parallel batches
 ```
 
 ## Release
