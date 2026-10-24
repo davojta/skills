@@ -1,7 +1,7 @@
 {
   "name": "skills",
   "version": "0.1.0",
-  "description": "Size-based specs and grug-style code review a tired developer can follow at 3 AM.",
+  "description": "Size-based specs, grug-style code review, and visual HTML PR overviews a tired developer can follow at 3 AM.",
   "type": "module",
   "private": true,
   "license": "MIT",
