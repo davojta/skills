@@ -13,11 +13,25 @@ The `grug` agent gives a simplicity second opinion and uses `review` for diffs.
 
 ## Install
 
+Claude Code and Codex install the whole `ds` plugin: `spec`, `review`, and the `grug` agent. Only the Skills CLI can install a single skill.
+
+### spec only
+
 Skills CLI:
 
 ```bash
-npx skills add davojta/skills
+npx skills add davojta/skills --skill spec
 ```
+
+### review and grug
+
+Skills CLI (skill only, no agent):
+
+```bash
+npx skills add davojta/skills --skill review
+```
+
+### Whole plugin
 
 Claude Code, including the grug agent:
 
@@ -33,12 +47,48 @@ codex plugin marketplace add davojta/skills
 codex plugin add ds@davojta
 ```
 
+### From a local clone
+
+Pass the clone path instead of `davojta/skills`:
+
+```console
+❯ claude plugin marketplace add /Users/alex/projects/skills
+✔ Successfully added marketplace: davojta (declared in user settings)
+
+❯ claude plugin install ds@davojta
+✔ Successfully installed plugin: ds@davojta (scope: user)
+```
+
+After editing a skill, refresh it:
+
+```bash
+claude plugin marketplace update davojta
+claude plugin update ds@davojta
+```
+
 ## Usage
+
+### spec
 
 ```bash
 /ds:spec path/to/task/input.md        # skill picks the tier
-/ds:spec smol path/to/task/input.md   # force a tier
-/ds:spec Add retry to S3 downloader   # free text → docs/tasks/<date>-<slug>/
+/ds:spec smol path/to/task/input.md   # force a tier: simple | smol | medium | big
+/ds:spec Add retry to S3 downloader   # free text, no input file
+```
+
+With a free-form `input.md` kept outside the repo, force the `medium` tier:
+
+```bash
+/ds:spec medium /Users/alex/ai_tasks/ai-super-duper-web-service/2026-10-24-speedup-debug-tool-deployment/input.md
+```
+
+`proposal.md` and `design.md` go next to `input.md`. The skill stops after `proposal.md` to ask about open decisions.
+
+With free text, docs go to `docs/tasks/<date>-<slug>/` if the repo already has `docs/tasks/`. If it does not, the skill asks whether to create that folder or use one you name.
+
+### review
+
+```bash
 /ds:review                            # review the current diff
 /ds:review 42                         # review PR #42
 ```
