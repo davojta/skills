@@ -1,0 +1,14 @@
+{
+  "name": "davojta",
+  "description": "Dzianis Sheka's personal Claude Code plugins",
+  "owner": {
+    "name": "Dzianis Sheka"
+  },
+  "plugins": [
+    {
+      "name": "ds",
+      "source": "./.agents",
+      "description": "Size-based specs and grug-style code review a tired developer can follow at 3 AM."
+    }
+  ]
+}

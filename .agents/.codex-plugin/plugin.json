@@ -1,0 +1,38 @@
+{
+  "name": "ds",
+  "version": "0.1.0",
+  "description": "Size-based specs and grug-style code review a tired developer can follow at 3 AM.",
+  "author": {
+    "name": "Dzianis Sheka",
+    "url": "https://github.com/davojta"
+  },
+  "homepage": "https://github.com/davojta/skills",
+  "repository": "https://github.com/davojta/skills",
+  "license": "MIT",
+  "keywords": [
+    "grug",
+    "spec",
+    "planning",
+    "review",
+    "simplification"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Dzianis Sheka Skills",
+    "shortDescription": "Size-based specs and grug-style code review",
+    "longDescription": "Spec sizes a change and writes only the spec docs that fit it, from a plan to research, proposal, design, tasks, and validation. Review checks a diff for proven bugs and for code a tired developer cannot follow at 3 AM. The grug agent gives a simplicity second opinion.",
+    "developerName": "Dzianis Sheka",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/davojta/skills",
+    "defaultPrompt": [
+      "Spec this change before coding",
+      "Run a grug review on this branch"
+    ],
+    "brandColor": "#2563EB"
+  }
+}

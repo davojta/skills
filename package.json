@@ -1,0 +1,15 @@
+{
+  "name": "skills",
+  "version": "0.1.0",
+  "description": "Size-based specs and grug-style code review a tired developer can follow at 3 AM.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "repository": "https://github.com/davojta/skills",
+  "engines": {
+    "node": ">=22.20.0"
+  },
+  "scripts": {
+    "version": "node cli.ts version"
+  }
+}

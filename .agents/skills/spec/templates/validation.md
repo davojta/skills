@@ -1,0 +1,39 @@
+# <name>: Validation
+
+Design: [design.md](design.md) · Tasks: [tasks.md](tasks.md)
+
+For the human. Run each step and tick it. If a result does not match, stop and report.
+
+## Setup
+
+```bash
+<install command>
+```
+
+## HITL-1: <what to check>
+
+When: after <task id>.
+
+```bash
+<exact command>
+```
+
+Expected: <exact output / exit code / file content>.
+- [ ] Pass
+
+## HITL-2: <what to check>
+
+Open: <URL or file path>
+
+Expected: <what you should see>.
+- [ ] Pass
+
+## Final
+
+```bash
+<test command>
+<lint command>
+```
+
+Expected: all green.
+- [ ] Pass

@@ -1,0 +1,10 @@
+{
+  "name": "ds",
+  "version": "0.1.0",
+  "description": "Size-based specs and grug-style code review a tired developer can follow at 3 AM.",
+  "author": {
+    "name": "Dzianis Sheka"
+  },
+  "repository": "https://github.com/davojta/skills",
+  "license": "MIT"
+}
