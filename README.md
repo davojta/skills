@@ -120,6 +120,11 @@ With free text, docs go to `docs/tasks/<date>-<slug>/` if the repo already has `
 
 Writes `~/.agent/diagrams/visual-review/<repo>/<pr-N or branch>/overview.html` and opens it.
 
+Review of PR #3, light theme (summary, numbers, files) and dark theme (flow):
+
+![visual-review, light theme](docs/images/visual-review-light.png)
+![visual-review, dark theme](docs/images/visual-review-dark.png)
+
 The page uses:
 
 - Theme: tweakcn [DE-Swiss-Design](https://tweakcn.com/r/themes/cmluqysmw000204ji34jja0ul) on the [shadcn/ui](https://ui.shadcn.com) token structure
