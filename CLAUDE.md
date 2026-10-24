@@ -39,3 +39,5 @@ To adapt a skill from another repo, or review upstream changes to one already ad
 ## Editing manifests
 
 `version` and `description` in both plugin manifests, and `description` in `.agents/plugins/marketplace.json`, are generated. Set the description in `.claude-plugin/marketplace.json` and the version in `package.json`, then run `npm run version`. Never edit those two fields by hand. The Codex `interface` block is hand-written.
+
+`.agents/skills/grug-review/rules.md` is generated from `.agents/agents/grug.md` by `npm run version`. Edit the agent, never the copy.

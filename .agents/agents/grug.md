@@ -1,6 +1,6 @@
 ---
 name: grug
-description: Complexity review and simplification. Use when code, a plan, or a design looks over-engineered, too clever, or hard to follow, or when the user wants a simplicity second opinion. The grug-review skill runs it for small diffs.
+description: Complexity review and simplification. Use when code, a plan, or a design looks over-engineered, too clever, or hard to follow, or when the user wants a simplicity second opinion. The grug-review skill runs it on the whole diff, or once per batch for big diffs.
 model: opus
 color: blue
 ---

@@ -3,25 +3,24 @@
 | Skill | Description |
 | --- | --- |
 | [`spec`](.agents/skills/spec/SKILL.md) | Size a change (simple / smol / medium / big) and write only the spec docs that fit it. |
-| [`grug-review`](.agents/skills/grug-review/SKILL.md) | Review a diff for proven bugs and for code a tired developer cannot follow at 3 AM. Small diffs (1–15 files) go to one `grug` agent; big ones go to parallel `big-grug` agents, one per batch. Inspired by [`grug-review`](https://github.com/stepankuzmin/skills/blob/main/.agents/skills/grug-review/SKILL.md) and [The Grug Brained Developer](https://grugbrain.dev/). |
+| [`grug-review`](.agents/skills/grug-review/SKILL.md) | Review a diff for proven bugs and for code a tired developer cannot follow at 3 AM. Small diffs (1–15 files) go to one `grug` agent on opus; big ones go to parallel `grug` agents on sonnet, one per batch. Inspired by [`grug-review`](https://github.com/stepankuzmin/skills/blob/main/.agents/skills/grug-review/SKILL.md) and [The Grug Brained Developer](https://grugbrain.dev/). |
 | [`visual-review`](.agents/skills/visual-review/SKILL.md) | One-page HTML overview of a PR with diagrams, before/after code, and a grug review. Adapted from [visual-explainer](https://github.com/nicobailon/visual-explainer) by Nico Bailon. |
 
-Agents:
+Agent:
 
-- `grug` gives a simplicity second opinion and reviews small diffs.
-- `big-grug` reviews one batch of a big diff.
+- `grug` gives a simplicity second opinion and reviews diffs for `grug-review`.
 
-Both rate findings with 12 pains (checked against *A Philosophy of Software Design* and *Tidy First?*), the Grug Scale, and a 0–10 grade.
+It rates findings with 12 pains (checked against *A Philosophy of Software Design* and *Tidy First?*), the Grug Scale, and a 0–10 grade.
 
 ## Sources
 
 - [stepankuzmin/skills#7c3fa2c0275bcee7c1633a3ab6b0374e1a059b6e](https://github.com/stepankuzmin/skills/tree/7c3fa2c0275bcee7c1633a3ab6b0374e1a059b6e/.agents): repo layout, `cli.ts`, `grug` agent; `grug-review` adapts its `grug-review` skill
-- Stepan Kuzmin's `grug` Claude Code plugin: `big-grug` agent and the big-review batching flow
+- Stepan Kuzmin's `grug` Claude Code plugin: the big-review batching flow
 - [nicobailon/visual-explainer](https://github.com/nicobailon/visual-explainer): `visual-review` layout, Mermaid zoom, and section structure (MIT)
 
 ## Install
 
-Claude Code and Codex install the whole `ds` plugin: `spec`, `grug-review`, `visual-review`, and the `grug` and `big-grug` agents. Only the Skills CLI can install a single skill.
+Claude Code and Codex install the whole `ds` plugin: `spec`, `grug-review`, `visual-review`, and the `grug` agent. Only the Skills CLI can install a single skill.
 
 ### spec only
 
@@ -33,7 +32,7 @@ npx skills add davojta/skills --skill spec
 
 ### grug-review and agents
 
-Skills CLI (skill only, no agents; it reviews inline with the `grug` rules):
+Skills CLI (skill only, no agents; it reviews inline with its bundled `rules.md`):
 
 ```bash
 npx skills add davojta/skills --skill grug-review

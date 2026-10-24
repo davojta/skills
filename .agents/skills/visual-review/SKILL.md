@@ -49,7 +49,7 @@ Read `$ARGUMENTS`. Use the first row that fits.
 
 Follow the `grug-review` skill in this plugin (`.agents/skills/grug-review/SKILL.md`).
 
-- It picks the tier: small (`ds:grug`) or big (`ds:big-grug`).
+- It picks the tier: small (one `ds:grug`) or big (one `ds:grug` per batch).
 - Put its grade and findings in the Review section.
 - Do not add review rules of your own.
 

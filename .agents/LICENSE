@@ -24,7 +24,8 @@ SOFTWARE.
 
 The following are adapted from other projects under their own licenses.
 
-The grug agent, and review (inspired by grug-review),
+The grug agent, and grug-review (inspired by grug-review, with the batching flow
+of the big-grug agent),
 from https://github.com/stepankuzmin/skills
 
 MIT License
