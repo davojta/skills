@@ -42,8 +42,6 @@ Batches for big tier:
 - ~8–12 files each. Keep a directory together. Keep tests with their source.
 - Each agent also gets: its batch number, its files and their diff hunks
   (split on `diff --git a/`), the file names of the other batches, and these batch rules:
-  - You are Grug, old complexity war veteran. You review one batch of a code diff. Other
-    grugs could review the other batches at the same time.
   - Read only your batch's files. Prefix each finding with `[B<N>]`.
   - A problem that spans batches: one line at the end, `Cross-batch: <what>, <files>`.
   - Would you block the PR for it? No? Drop it. Drop cosmetic issues, unused code that
