@@ -8,7 +8,7 @@
     {
       "name": "ds",
       "source": "./.agents",
-      "description": "Size-based specs and grug-style code review a tired developer can follow at 3 AM."
+      "description": "Size-based specs, grug-style code review, and visual HTML PR overviews a tired developer can follow at 3 AM."
     }
   ]
 }

@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><!-- FILL: page title, e.g. "PR #42: short change name" --></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* shadcn/ui structure. Theme: tweakcn "DE-Swiss-Design". Light/dark follows the system unless toggled. */
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --body: #262626;
+  --card: #ffffff;
+  --muted: #f5f5f5;
+  --muted-foreground: #6b6b6b;
+  --border: #000000;
+  --code-bg: #f0f0f0;
+  --primary: #db0000;
+  --accent: #f2b600;
+  --shadow: 3px 3px 0 0 #000000;
+  --radius: 0px;
+  --added: #3f6f48;
+  --added-bg: #e6f0e8;
+  --removed: #c81e1e;
+  --removed-bg: #fde8e8;
+  --modified: #8a5a00;
+  --modified-bg: #fdf3c4;
+  --info: #1d4ed8;
+  --info-bg: #e8eefc;
+  --node-added: #dcfce7;
+  --node-modified: #dbeafe;
+  --node-deleted: #fce7f3;
+  --font-sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'SF Mono', ui-monospace, 'Courier New', monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  --background: #000000;
+  --foreground: #ffffff;
+  --body: #d4d4d4;
+  --card: #111111;
+  --muted: #262626;
+  --muted-foreground: #b5b5b5;
+  --border: #ffffff;
+  --code-bg: #262626;
+  --primary: #f03a2e;
+  --accent: #f7c21c;
+  --shadow: 3px 3px 0 0 #ffffff;
+  --added: #7fb98b;
+  --added-bg: #14261a;
+  --removed: #f26b6b;
+  --removed-bg: #3a1010;
+  --modified: #f7c21c;
+  --modified-bg: #3a2e05;
+  --info: #7aa7ff;
+  --info-bg: #111c3a;
+  --node-added: #163a22;
+  --node-modified: #172a4a;
+  --node-deleted: #4a1430;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --background: #000000;
+  --foreground: #ffffff;
+  --body: #d4d4d4;
+  --card: #111111;
+  --muted: #262626;
+  --muted-foreground: #b5b5b5;
+  --border: #ffffff;
+  --code-bg: #262626;
+  --primary: #f03a2e;
+  --accent: #f7c21c;
+  --shadow: 3px 3px 0 0 #ffffff;
+  --added: #7fb98b;
+  --added-bg: #14261a;
+  --removed: #f26b6b;
+  --removed-bg: #3a1010;
+  --modified: #f7c21c;
+  --modified-bg: #3a2e05;
+  --info: #7aa7ff;
+  --info-bg: #111c3a;
+  --node-added: #163a22;
+  --node-modified: #172a4a;
+  --node-deleted: #4a1430;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  letter-spacing: -0.01em;
+  background: var(--background);
+  color: var(--body);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.25; color: var(--foreground); margin: 6px 0 10px; overflow-wrap: anywhere; }
+h2 { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--foreground); margin: 0 0 12px; }
+h2 .icon { width: 16px; height: 16px; color: var(--primary); }
+h3 { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.4; color: var(--foreground); margin: 0 0 4px; }
+p { margin: 0 0 6px; }
+ul { margin: 0; padding-left: 18px; }
+li { margin: 2px 0; }
+a { color: var(--foreground); text-decoration: underline; text-decoration-color: var(--primary); text-underline-offset: 3px; }
+a:hover { text-decoration-color: currentColor; }
+strong { color: var(--foreground); font-weight: 600; }
+code, pre, .mono { font-family: var(--font-mono); }
+code { font-size: 0.86em; background: var(--code-bg); color: var(--foreground); padding: 1px 4px; }
+pre code { font-size: inherit; background: none; padding: 0; color: inherit; }
+.icon { width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -2px; }
+.muted { color: var(--muted-foreground); }
+.ref { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted-foreground); }
+a.ref { text-decoration: underline dotted; text-decoration-color: currentColor; text-underline-offset: 3px; }
+a.ref:hover { color: var(--primary); }
+.container { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+section { padding: 20px 0; }
+section + section { border-top: 2px solid var(--border); }
+footer { padding: 16px 0 32px; font-size: 12.5px; }
+
+.topnav { position: sticky; top: 0; z-index: 10; background: var(--background); border-bottom: 2px solid var(--border); }
+.topnav .container { display: flex; align-items: center; gap: 2px; overflow-x: auto; padding-top: 6px; padding-bottom: 6px; }
+.topnav a { flex: none; padding: 3px 8px; color: var(--foreground); text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.topnav a:hover { background: var(--foreground); color: var(--background); }
+.theme-toggle { margin-left: auto; flex: none; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); cursor: pointer; }
+.theme-toggle:hover { background: var(--foreground); color: var(--background); }
+
+header.container { padding-top: 20px; padding-bottom: 16px; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 0; }
+.meta div { display: flex; align-items: center; gap: 6px; }
+.meta dt { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-foreground); }
+.meta dd { margin: 0; font-family: var(--font-mono); font-size: 13px; color: var(--foreground); }
+.meta .icon { color: var(--primary); }
+.lead { font-size: 16px; color: var(--foreground); }
+
+.card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); min-width: 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; }
+.badge { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 8px; border: 1px solid currentColor; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; background: var(--muted); color: var(--foreground); }
+.badge .icon { width: 12px; height: 12px; }
+.badge.added { background: var(--added-bg); color: var(--added); }
+.badge.removed { background: var(--removed-bg); color: var(--removed); }
+.badge.modified { background: var(--modified-bg); color: var(--modified); }
+.badge.info { background: var(--info-bg); color: var(--info); }
+
+.stat { padding: 10px 12px; }
+.stat .label { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-foreground); }
+.stat .value { font-size: 26px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.3; color: var(--foreground); font-variant-numeric: tabular-nums; }
+.value.added { color: var(--added); }
+.value.removed { color: var(--removed); }
+
+.files { font-family: var(--font-mono); font-size: 13px; list-style: none; margin: 0; padding: 6px 12px; }
+.files li { display: flex; gap: 8px; margin: 0; padding: 3px 0; }
+.files li + li { border-top: 1px solid var(--muted); }
+.files .path { min-width: 0; overflow-wrap: anywhere; color: var(--foreground); }
+.files .st { flex: none; width: 14px; font-weight: 600; text-align: center; }
+.st.A { color: var(--added); }
+.st.M { color: var(--modified); }
+.st.D { color: var(--removed); }
+.files .n { flex: none; margin-left: auto; color: var(--muted-foreground); }
+
+.caption { font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-foreground); margin: 0 0 6px; }
+* + .caption { margin-top: 14px; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.compare > * { min-width: 0; overflow: hidden; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 5px 12px; background: var(--foreground); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--background); }
+.panel-head a.ref, .panel-head .ref { color: var(--background); }
+.panel-head .ref { font-size: 11.5px; letter-spacing: 0; text-transform: none; text-align: right; overflow-wrap: anywhere; }
+pre { margin: 0; padding: 10px 12px; background: var(--muted); border-radius: var(--radius); overflow: auto; font-size: 12.5px; line-height: 1.55; color: var(--foreground); }
+.compare pre { max-height: 320px; background: var(--card); border-radius: 0; }
+
+.verdict { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+.grade { flex: none; font-size: 40px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; color: var(--primary); }
+.grade small { font-size: 13px; font-weight: 400; color: var(--muted-foreground); }
+.verdict p { margin: 0; color: var(--foreground); }
+.finding { border: 1px solid var(--border); border-left: 6px solid var(--muted-foreground); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow); padding: 10px 12px; margin-bottom: 10px; min-width: 0; overflow-wrap: anywhere; }
+.finding p { margin: 0 0 4px; }
+.finding.bug { border-left-color: var(--removed); }
+.finding.pain { border-left-color: var(--modified); }
+.finding.good { border-left-color: var(--added); }
+.finding.question { border-left-color: var(--info); }
+.tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.bug .tag { color: var(--removed); }
+.pain .tag { color: var(--modified); }
+.good .tag { color: var(--added); }
+.question .tag { color: var(--info); }
+
+details { border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow); margin-bottom: 10px; }
+details summary { cursor: pointer; padding: 8px 12px; font-weight: 600; color: var(--foreground); list-style: none; }
+details summary::-webkit-details-marker { display: none; }
+details summary::after { content: '+'; float: right; color: var(--muted-foreground); }
+details[open] summary::after { content: '−'; }
+details > :not(summary) { margin: 0; padding: 0 12px 8px; }
+
+.diagram {
+  position: relative; min-height: 240px; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); cursor: grab; touch-action: none;
+  --pele-bg: var(--card);
+  --pele-fg: var(--foreground);
+  --pele-muted: var(--muted-foreground);
+  --pele-line: var(--foreground);
+  --pele-surface: var(--muted);
+  --pele-surface-alt: var(--border);
+  --pele-border: var(--border);
+  --pele-accent: var(--primary);
+  --pele-font: var(--font-sans);
+  --pele-radius: 0px;
+}
+.diagram.dragging { cursor: grabbing; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 8px 0 0; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-foreground); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.swatch { display: inline-block; width: 12px; height: 12px; border: 1px solid var(--border); }
+.swatch.added { background: var(--node-added); }
+.swatch.modified { background: var(--node-modified); }
+.swatch.deleted { background: var(--node-deleted); }
+.pele-node.added > :not(text) { fill: var(--node-added); }
+.pele-node.modified > :not(text) { fill: var(--node-modified); }
+.pele-node.deleted > :not(text) { fill: var(--node-deleted); }
+#flow .pele-node tspan:nth-child(n+2) { font-size: 0.8em; fill: var(--muted-foreground); }
+.diagram + details { margin-top: 8px; }
+ul.legend-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px 16px; list-style: none; }
+.diagram .stage { display: inline-block; padding: 16px; transform-origin: 0 0; }
+.diagram pre.mermaid { background: none; padding: 0; overflow: visible; }
+.diagram .controls { position: absolute; top: 6px; right: 6px; z-index: 1; display: flex; gap: 4px; }
+.diagram button { display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 26px; padding: 0 6px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+.diagram button:hover { background: var(--foreground); color: var(--background); }
+
+@media (max-width: 760px) {
+  .compare { grid-template-columns: 1fr; }
+  h1 { font-size: 21px; }
+}
+</style>
+<script>try { const t = localStorage.getItem('vr-theme'); if (t) document.documentElement.dataset.theme = t; } catch {}</script>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!-- Lucide icons v0.460.0, ISC license, https://lucide.dev -->
+  <symbol id="i-book-open" viewBox="0 0 24 24"><path d="M12 7v14" /> <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /></symbol>
+  <symbol id="i-bug" viewBox="0 0 24 24"><path d="m8 2 1.88 1.88" /> <path d="M14.12 3.88 16 2" /> <path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1" /> <path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6" /> <path d="M12 20v-9" /> <path d="M6.53 9C4.6 8.8 3 7.1 3 5" /> <path d="M6 13H2" /> <path d="M3 21c0-2.1 1.7-3.9 3.8-4" /> <path d="M20.97 5c0 2.1-1.6 3.8-3.5 4" /> <path d="M22 13h-4" /> <path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" /></symbol>
+  <symbol id="i-chart-no-axes-column" viewBox="0 0 24 24"><line x1="18" x2="18" y1="20" y2="10" /> <line x1="12" x2="12" y1="20" y2="4" /> <line x1="6" x2="6" y1="20" y2="14" /></symbol>
+  <symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="m9 12 2 2 4-4" /></symbol>
+  <symbol id="i-circle-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /> <path d="M12 17h.01" /></symbol>
+  <symbol id="i-file-diff" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /> <path d="M9 10h6" /> <path d="M12 13V7" /> <path d="M9 17h6" /></symbol>
+  <symbol id="i-file-text" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /> <path d="M14 2v4a2 2 0 0 0 2 2h4" /> <path d="M10 9H8" /> <path d="M16 13H8" /> <path d="M16 17H8" /></symbol>
+  <symbol id="i-flask-conical" viewBox="0 0 24 24"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2" /> <path d="M8.5 2h7" /> <path d="M7 16h10" /></symbol>
+  <symbol id="i-folder-git-2" viewBox="0 0 24 24"><path d="M9 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v5" /> <circle cx="13" cy="12" r="2" /> <path d="M18 19c-2.8 0-5-2.2-5-5v8" /> <circle cx="20" cy="19" r="2" /></symbol>
+  <symbol id="i-folder-tree" viewBox="0 0 24 24"><path d="M20 10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2.5a1 1 0 0 1-.8-.4l-.9-1.2A1 1 0 0 0 15 3h-2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z" /> <path d="M20 21a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-2.9a1 1 0 0 1-.88-.55l-.42-.85a1 1 0 0 0-.92-.6H13a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z" /> <path d="M3 5a2 2 0 0 0 2 2h3" /> <path d="M3 3v13a2 2 0 0 0 2 2h3" /></symbol>
+  <symbol id="i-git-commit-horizontal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" /> <line x1="3" x2="9" y1="12" y2="12" /> <line x1="15" x2="21" y1="12" y2="12" /></symbol>
+  <symbol id="i-git-compare" viewBox="0 0 24 24"><circle cx="18" cy="18" r="3" /> <circle cx="6" cy="6" r="3" /> <path d="M13 6h3a2 2 0 0 1 2 2v7" /> <path d="M11 18H8a2 2 0 0 1-2-2V9" /></symbol>
+  <symbol id="i-git-pull-request" viewBox="0 0 24 24"><circle cx="18" cy="18" r="3" /> <circle cx="6" cy="6" r="3" /> <path d="M13 6h3a2 2 0 0 1 2 2v7" /> <line x1="6" x2="6" y1="9" y2="21" /></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" /></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></symbol>
+  <symbol id="i-network" viewBox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1" /> <rect x="2" y="16" width="6" height="6" rx="1" /> <rect x="9" y="2" width="6" height="6" rx="1" /> <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" /> <path d="M12 12V8" /></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" /> <path d="M12 22V12" /> <path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7" /> <path d="m7.5 4.27 9 5.15" /></symbol>
+  <symbol id="i-paintbrush" viewBox="0 0 24 24"><path d="m14.622 17.897-10.68-2.913" /> <path d="M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z" /> <path d="M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15" /></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14" /> <path d="M12 5v14" /></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" /> <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" /> <path d="M7 21h10" /> <path d="M12 3v18" /> <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" /></symbol>
+  <symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" /> <path d="M12 2v2" /> <path d="M12 20v2" /> <path d="m4.93 4.93 1.41 1.41" /> <path d="m17.66 17.66 1.41 1.41" /> <path d="M2 12h2" /> <path d="M20 12h2" /> <path d="m6.34 17.66-1.41 1.41" /> <path d="m19.07 4.93-1.41 1.41" /></symbol>
+  <symbol id="i-workflow" viewBox="0 0 24 24"><rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /></symbol>
+</svg>
+
+<nav class="topnav">
+  <div class="container">
+    <!-- FILL: keep one link per section you keep. Delete links of deleted sections. -->
+    <a href="#summary">Summary</a>
+    <a href="#numbers">Numbers</a>
+    <a href="#files">Files</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#before-after">Before / after</a>
+    <a href="#flow">Flow</a>
+    <a href="#review">Review</a>
+    <a href="#tests">Tests</a>
+    <a href="#decisions">Decisions</a>
+    <button class="theme-toggle" type="button" title="Toggle dark theme"><svg class="icon"><use href="#i-moon"/></svg></button>
+  </div>
+</nav>
+
+<header class="container">
+  <!-- FILL: meta row. Link the repo and the PR. Not a PR: use a Commit or Branch row instead.
+       Uncommitted: no links. -->
+  <dl class="meta">
+    <div><svg class="icon"><use href="#i-folder-git-2"/></svg><dt>Repo</dt><dd><a href="https://github.com/owner/repo">owner/repo</a></dd></div>
+    <div><svg class="icon"><use href="#i-git-pull-request"/></svg><dt>PR</dt><dd><a href="https://github.com/owner/repo/pull/42">#42</a></dd></div>
+    <div><svg class="icon"><use href="#i-git-commit-horizontal"/></svg><dt>Base</dt><dd>main ← feature-x</dd></div>
+  </dl>
+  <!-- FILL: one line title -->
+  <h1>Example: add retry to the uploader</h1>
+  <!-- FILL: one-sentence lead: why the change exists. -->
+  <p class="lead">Uploads failed on network drops. The uploader now retries 3 times with a short delay.</p>
+</header>
+
+<section id="summary">
+  <div class="container">
+    <h2><svg class="icon"><use href="#i-file-text"/></svg>Summary</h2>
+    <!-- FILL: what changed, 1–3 short lines. Then scope in one line. -->
+    <p>Adds <code>withRetry</code> and wraps the single <code>send</code> call.</p>
+    <p class="muted">Scope: 12 files, 1 new module, upload path only.</p>
+  </div>
+</section>
+
+<section id="numbers">
+  <div class="container">
+    <h2><svg class="icon"><use href="#i-chart-no-axes-column"/></svg>Numbers</h2>
+    <!-- FILL: keep these five cards. Use real numbers from the fact sheet. -->
+    <div class="grid">
+      <div class="card stat"><div class="label"><svg class="icon"><use href="#i-file-diff"/></svg>Files</div><div class="value">12</div></div>
+      <div class="card stat"><div class="label"><svg class="icon"><use href="#i-plus"/></svg>Added</div><div class="value added">+340</div></div>
+      <div class="card stat"><div class="label"><svg class="icon"><use href="#i-minus"/></svg>Removed</div><div class="value removed">−120</div></div>
+      <div class="card stat"><div class="label"><svg class="icon"><use href="#i-package"/></svg>New modules</div><div class="value">1</div></div>
+      <div class="card stat"><div class="label"><svg class="icon"><use href="#i-flask-conical"/></svg>Test files</div><div class="value">3</div></div>
+    </div>
+    <!-- FILL: pick the real badge for docs. Use added, removed, or modified. Add a risk badge. -->
+    <p class="badges">
+      <span class="badge modified"><svg class="icon"><use href="#i-book-open"/></svg>Docs needed</span>
+      <span class="badge info">Medium risk</span>
+    </p>
+  </div>
+</section>
+
+<section id="files">
+  <div class="container">
+    <h2><svg class="icon"><use href="#i-folder-tree"/></svg>Files</h2>
+    <!-- FILL: one row per file, grouped by folder. Status A (added), M (modified), D (deleted). Add +n −m. -->
+    <div class="card">
+      <ul class="files">
+        <li><span class="st A">A</span><span class="path">src/upload/retry.ts</span><span class="n">+64 −0</span></li>
+        <li><span class="st M">M</span><span class="path">src/upload/index.ts</span><span class="n">+18 −7</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="container">
+    <h2><svg class="icon"><use href="#i-network"/></svg>Architecture</h2>
+    <!-- FILL: 10 modules or fewer: Mermaid graph below. More than 10: replace the diagram with
+         <div class="grid"> of <div class="card stat"> items, one per module, with a one-line role. -->
+    <div class="diagram">
+      <div class="controls">
+        <button data-zoom="1.25" title="Zoom in"><svg class="icon"><use href="#i-plus"/></svg></button>
+        <button data-zoom="0.8" title="Zoom out"><svg class="icon"><use href="#i-minus"/></svg></button>
+        <button data-reset title="Reset zoom">Reset</button>
+      </div>
+      <div class="stage">
+        <!-- FILL: Mermaid graph. Example below, replace it. Color file nodes with the added, modified,
+             deleted classes. Leave other nodes plain. Keep the legend; drop entries with no nodes. -->
+        <pre class="mermaid">
+graph TD
+  A["uploader<br/>index.ts"] --> B["retry<br/>retry.ts"]
+  B --> C["http client<br/>api.ts"]
+  class B added
+  class A modified
+        </pre>
+      </div>
+    </div>
+    <p class="legend"><span><i class="swatch added"></i>Added</span><span><i class="swatch modified"></i>Modified</span><span><i class="swatch deleted"></i>Deleted</span></p>
+  </div>
+</section>
+
+<section id="before-after">
+  <div class="container">
+    <h2><svg class="icon"><use href="#i-git-compare"/></svg>Before / after</h2>
+    <!-- FILL: critical files only. One caption + compare pair per behavior change. Header ref is file:start-end.
+         Short excerpts, not whole files. Skip config, formatting, renames. -->
+    <p class="caption">Upload call</p>
+    <div class="compare">
+      <div class="card">
+        <div class="panel-head"><span>Before</span><a class="ref" href="https://github.com/owner/repo/pull/42/files#diff-SHA256L40">src/upload/index.ts:40-44</a></div>
+        <pre><code>const res = await send(file);
+if (!res.ok) throw new Error('upload failed');</code></pre>
+      </div>
+      <div class="card">
+        <div class="panel-head"><span>After</span><a class="ref" href="https://github.com/owner/repo/pull/42/files#diff-SHA256R40">src/upload/index.ts:40-46</a></div>
+        <pre><code>const res = await withRetry(() =&gt; send(file), 3);
+if (!res.ok) throw new Error('upload failed');</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPTIONAL: delete this section if trivial. -->
+<section id="flow">
+  <div class="container">
+    <h2><svg class="icon"><use href="#i-workflow"/></svg>Flow</h2>
+    <!-- FILL: Mermaid flowchart for a new lifecycle or pipeline. graph TD if 6+ nodes.
+         Node label: "emoji step name<br/>input ➡️ output". Use emoji from the legend below.
+         One `click <id> callback "explanation"` line per node: the hover tooltip. -->
+    <div class="diagram">
+      <div class="controls">
+        <button data-zoom="1.25" title="Zoom in"><svg class="icon"><use href="#i-plus"/></svg></button>
+        <button data-zoom="0.8" title="Zoom out"><svg class="icon"><use href="#i-minus"/></svg></button>
+        <button data-reset title="Reset zoom">Reset</button>
+      </div>
+      <div class="stage">
+        <pre class="mermaid">
+graph TD
+  A["📥 read args<br/>PR # ➡️ no file"] --> B["🔍 get diff<br/>PR # ➡️ .diff"]
+  B --> C["🤖 review<br/>.diff ➡️ .json"]
+  C --> D["📝 report<br/>.json ➡️ .md"]
+  click A callback "Parse the PR number from the command"
+  click B callback "gh pr diff, generated files dropped"
+  click C callback "One agent reviews the diff, writes findings"
+  click D callback "Render findings as a Markdown report"
+        </pre>
+      </div>
+    </div>
+    <details>
+      <summary>Legend</summary>
+      <ul class="legend-grid">
+        <li>📥 input</li><li>🔍 read or fetch</li><li>⚙️ compute</li><li>🔀 branch or merge</li>
+        <li>🤖 agent</li><li>📝 write or report</li><li>📤 output</li>
+      </ul>
+      <p>Second line: what the step reads ➡️ what it writes. Files by extension: .md, .txt, .csv, .parquet, .json, .diff. Otherwise a short word: text, no file. Hover a step for details.</p>
+    </details>
+  </div>
+</section>
+
+<section id="review">
+  <div class="container">
+    <h2><svg class="icon"><use href="#i-shield-check"/></svg>Review</h2>
+    <!-- FILL: from the grug-review run. Grade and one-line verdict. Then findings: bugs first, then pains.
+         Card class and tag: bug (#i-bug, Bug), pain (#i-paintbrush, Pain), good (#i-circle-check, Good),
+         question (#i-circle-help, Question). Each card has a linked file:line ref. -->
+    <div class="verdict">
+      <span class="grade">7<small>/10</small></span>
+      <p>Small and clear. One unhandled path in the retry loop.</p>
+    </div>
+    <div class="finding bug">
+      <h3><span class="tag"><svg class="icon"><use href="#i-bug"/></svg>Bug</span>Retry does not stop on 4xx</h3>
+      <p>Client errors retry too. Wasted calls, same result.</p>
+      <a class="ref" href="https://github.com/owner/repo/pull/42/files#diff-SHA256R12">src/upload/retry.ts:12</a>
+    </div>
+    <div class="finding pain">
+      <h3><span class="tag"><svg class="icon"><use href="#i-paintbrush"/></svg>Pain</span>Delay is a magic number</h3>
+      <p>500 ms lives in code. Move it next to the call.</p>
+      <a class="ref" href="https://github.com/owner/repo/pull/42/files#diff-SHA256R4">src/upload/retry.ts:4</a>
+    </div>
+    <div class="finding good">
+      <h3><span class="tag"><svg class="icon"><use href="#i-circle-check"/></svg>Good</span>Retry is one plain function</h3>
+      <p>No new class, no config.</p>
+      <a class="ref" href="https://github.com/owner/repo/pull/42/files#diff-SHA256R1">src/upload/retry.ts:1</a>
+    </div>
+    <div class="finding question">
+      <h3><span class="tag"><svg class="icon"><use href="#i-circle-help"/></svg>Question</span>Is 3 tries enough for slow links?</h3>
+      <p>Unknown. Check with the upload owner.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OPTIONAL: delete this section if trivial. -->
+<section id="tests">
+  <div class="container">
+    <h2><svg class="icon"><use href="#i-flask-conical"/></svg>Tests</h2>
+    <!-- FILL: test files touched. Then what is missing. Flag missing critical coverage. -->
+    <ul>
+      <li>Covered: retry succeeds on attempt 2 (<a class="ref" href="https://github.com/owner/repo/pull/42/files#diff-SHA256R10">test/upload/retry.test.ts:10</a>)</li>
+      <li class="muted">Missing: 4xx does not retry.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- OPTIONAL: delete this section unless there are 2 or more decisions. -->
+<section id="decisions">
+  <div class="container">
+    <h2><svg class="icon"><use href="#i-scale"/></svg>Decisions</h2>
+    <!-- FILL: one details block per decision. Decision, why, alternative. -->
+    <details open>
+      <summary>Fixed retry count, not backoff</summary>
+      <p><strong>Why:</strong> one retry path, easy to read at 3 AM.</p>
+      <p><strong>Alternative:</strong> exponential backoff. Rejected, more code for one case.</p>
+    </details>
+  </div>
+</section>
+
+<footer class="container">
+  <p class="muted">Layout adapted from <a href="https://github.com/nicobailon/visual-explainer">visual-explainer</a> by Nico Bailon (MIT). Icons: <a href="https://lucide.dev">Lucide</a> (ISC).</p>
+</footer>
+
+<script type="module">
+  import { mount } from 'https://cdn.jsdelivr.net/npm/pele@1.3.0/dist/pele.js';
+  for (const el of document.querySelectorAll('pre.mermaid')) {
+    el.querySelectorAll('br').forEach((br) => br.replaceWith('<br/>'));
+    mount(el, el.textContent);
+  }
+</script>
+<script>
+  const toggle = document.querySelector('.theme-toggle');
+  const isDark = () => (document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')) === 'dark';
+  const syncIcon = () => toggle.querySelector('use').setAttribute('href', isDark() ? '#i-sun' : '#i-moon');
+  toggle.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem('vr-theme', next); } catch {}
+    syncIcon();
+  });
+  syncIcon();
+
+  document.querySelectorAll('.diagram').forEach((box) => {
+    const stage = box.querySelector('.stage');
+    let scale = 1, x = 0, y = 0, drag = null;
+    const draw = () => { stage.style.transform = `translate(${x}px, ${y}px) scale(${scale})`; };
+    box.querySelectorAll('[data-zoom]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        scale = Math.min(3, Math.max(0.5, scale * Number(btn.dataset.zoom)));
+        draw();
+      });
+    });
+    box.querySelector('[data-reset]').addEventListener('click', () => {
+      scale = 1; x = 0; y = 0; draw();
+    });
+    box.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('button')) return;
+      drag = { px: e.clientX - x, py: e.clientY - y };
+      box.classList.add('dragging');
+      box.setPointerCapture(e.pointerId);
+    });
+    box.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      x = e.clientX - drag.px;
+      y = e.clientY - drag.py;
+      draw();
+    });
+    box.addEventListener('pointerup', () => {
+      drag = null;
+      box.classList.remove('dragging');
+    });
+  });
+</script>
+</body>
+</html>
