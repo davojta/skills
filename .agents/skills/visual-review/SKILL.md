@@ -65,12 +65,18 @@ Follow the `grug-review` skill in this plugin (`.agents/skills/grug-review/SKILL
 | Summary | Always. Why the change exists, in 1–2 sentences. Then scope. |
 | Numbers | Always. Files, +/− lines, new modules, tests. Docs badge. |
 | Files | Always. One row per file, grouped by folder. Status A / M / D. |
-| Architecture | Always. Mermaid graph if 10 modules or fewer. Otherwise module cards. |
+| Architecture | Always. Delta (Before · Changes · After) when the change rewires modules and fits the budget. Else Mermaid graph if 10 modules or fewer. Else module cards. |
 | Before / after | Always. Critical files only. Panel header `file:start-end`. Skip config, formatting, renames. |
 | Flow | Optional. Mermaid for a new lifecycle or pipeline. Node labels with emoji and I/O line. Keep the Legend block. |
 | Review | Always. Grug grade, verdict, findings from section 3. Card class and icon tag as in the template: bug, pain, good, question. |
 | Tests | Optional. Test files touched and missing critical coverage. |
 | Decisions | Optional. Only if 2 or more. Decision, why, alternative. |
+
+Architecture delta rules:
+
+- Rules and the data-attribute contract: `architecture-delta.md`. Copy the block from `template.html`.
+- Budget: 8 components, 10 relationships, 8 ledger entries. Over budget: use the Mermaid graph.
+- Run `python3 <skill-dir>/verify-architecture-delta.py <page>`. It must pass before you finish.
 
 Mermaid rules:
 

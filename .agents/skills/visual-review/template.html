@@ -229,7 +229,36 @@ ul.legend-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(
 .diagram button { display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 26px; padding: 0 6px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
 .diagram button:hover { background: var(--foreground); color: var(--background); }
 
+.delta-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow); }
+.delta-scroll:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.scroll-hint { display: none; font-size: 12px; color: var(--muted-foreground); }
+.delta { display: block; width: 100%; min-width: 1000px; height: auto; }
+.delta .bg, .delta .mask { fill: var(--card); }
+.delta .rule { fill: none; stroke: var(--muted-foreground); stroke-width: 1; }
+.delta text { font-family: var(--font-sans); font-size: 12px; font-weight: 600; fill: var(--foreground); letter-spacing: 0; }
+.delta .h { font-size: 14px; font-weight: 800; }
+.delta .sub { font-size: 11px; font-weight: 400; fill: var(--muted-foreground); }
+.delta .k, .delta .sl, .delta .lbl, .delta .led { font-family: var(--font-mono); font-weight: 400; fill: var(--body); }
+.delta .k { font-size: 9px; }
+.delta .sl { font-size: 9px; fill: var(--muted-foreground); }
+.delta .lbl { font-size: 9px; }
+.delta .led { font-size: 9px; font-weight: 600; letter-spacing: 0.06em; }
+.delta .led tspan { font-family: var(--font-sans); font-size: 12px; font-weight: 500; fill: var(--foreground); letter-spacing: 0; }
+.delta marker polygon { fill: var(--foreground); }
+.delta path[data-kind="relationship"] { fill: none; stroke: var(--foreground); stroke-width: 1.5; marker-end: url(#delta-arrow); }
+.delta path[data-status~="added"] { stroke-width: 2.5; }
+.delta path[data-status~="removed"] { stroke-dasharray: 4 4; }
+.delta path[data-status~="rewired"] { stroke-dasharray: 8 3 2 3; }
+.delta rect[data-role="bounds"] { fill: var(--card); stroke: var(--border); stroke-width: 1.5; }
+.delta [data-status~="added"] > rect[data-role="bounds"] { fill: var(--node-added); }
+.delta [data-status~="changed"] > rect[data-role="bounds"] { fill: var(--node-modified); }
+.delta [data-status~="removed"] > rect[data-role="bounds"] { fill: var(--node-deleted); stroke-dasharray: 4 4; }
+.delta [data-status~="moved"] > rect[data-role="bounds"] { stroke-dasharray: 1 4; stroke-linecap: round; }
+.swatch.dashed { border-style: dashed; }
+.swatch.dotted { border-style: dotted; }
+
 @media (max-width: 760px) {
+  .scroll-hint { display: block; }
   .compare { grid-template-columns: 1fr; }
   h1 { font-size: 21px; }
 }
@@ -338,8 +367,85 @@ ul.legend-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(
 <section id="architecture">
   <div class="container">
     <h2><svg class="icon"><use href="#i-network"/></svg>Architecture</h2>
-    <!-- FILL: 10 modules or fewer: Mermaid graph below. More than 10: replace the diagram with
+    <!-- FILL: pick one block, delete the other with its legend.
+         Rewires modules and fits the budget (8 components, 10 relationships, 8 ledger entries): the delta block.
+         Rules in architecture-delta.md. Then run verify-architecture-delta.py on the page.
+         Otherwise 10 modules or fewer: the Mermaid graph. More than 10: replace it with
          <div class="grid"> of <div class="card stat"> items, one per module, with a one-line role. -->
+    <div class="delta-scroll" role="region" aria-label="Before, changes, and after architecture comparison. Scroll sideways on narrow screens." tabindex="0">
+      <svg class="delta" viewBox="0 0 1200 384" xmlns="http://www.w3.org/2000/svg" data-diagram="architecture-delta" role="img" aria-labelledby="delta-title delta-desc">
+        <title id="delta-title">Uploader retry, before and after</title>
+        <desc id="delta-desc">The uploader now calls a new retry module, which calls the http client, instead of calling the client directly.</desc>
+        <defs>
+          <marker id="delta-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0, 8 3, 0 6"/></marker>
+        </defs>
+        <rect class="bg" width="1200" height="384"/>
+        <text class="h" x="24" y="24">Before</text>
+        <text class="sub" x="24" y="44">main</text>
+        <text class="h" x="424" y="24">Changes</text>
+        <text class="sub" x="424" y="44">4 changes</text>
+        <text class="h" x="840" y="24">After</text>
+        <text class="sub" x="840" y="44">PR #42</text>
+        <path class="rule" d="M 392 8 V 360 M 808 8 V 360"/>
+        <g data-snapshot="before" transform="translate(24 72)" data-grid="336 288 4">
+          <path data-kind="relationship" data-object-id="r1" data-status="rewired" data-signature="call:upload" data-from="uploader" data-to="client" d="M 168 64 V 224"/>
+          <rect class="mask" x="176" y="132" width="84" height="16"/>
+          <text class="lbl" x="180" y="144">r1 · REWIRED</text>
+          <g data-kind="component" data-object-id="uploader" data-status="changed" data-signature="uploader:send">
+            <rect data-role="bounds" x="96" y="0" width="144" height="64"/>
+            <text class="k" x="108" y="15">Δ uploader · CHANGED</text>
+            <text x="108" y="36">Uploader</text>
+            <text class="sl" x="108" y="53">send</text>
+          </g>
+          <g data-kind="component" data-object-id="client" data-status="unchanged" data-signature="http:v1">
+            <rect data-role="bounds" x="96" y="224" width="144" height="64"/>
+            <text class="k" x="108" y="239">= client · UNCHANGED</text>
+            <text x="108" y="260">HTTP client</text>
+            <text class="sl" x="108" y="277">api.ts</text>
+          </g>
+        </g>
+        <text class="sl" x="424" y="96">01</text>
+        <text class="led" data-change="CHANGED" data-target="uploader" x="456" y="94">CHANGED · uploader<tspan x="456" y="116">Wraps send in withRetry</tspan></text>
+        <path class="rule" d="M 456 130 H 776"/>
+        <text class="sl" x="424" y="144">02</text>
+        <text class="led" data-change="ADDED" data-target="retry" x="456" y="142">ADDED · retry<tspan x="456" y="164">New module, 3 tries, fixed delay</tspan></text>
+        <path class="rule" d="M 456 178 H 776"/>
+        <text class="sl" x="424" y="192">03</text>
+        <text class="led" data-change="REWIRED" data-target="r1" x="456" y="190">REWIRED · r1<tspan x="456" y="212">Uploader → client now uploader → retry</tspan></text>
+        <path class="rule" d="M 456 226 H 776"/>
+        <text class="sl" x="424" y="240">04</text>
+        <text class="led" data-change="ADDED" data-target="r2" x="456" y="238">ADDED · r2<tspan x="456" y="260">Retry → client</tspan></text>
+        <g data-snapshot="after" transform="translate(840 72)" data-grid="336 288 4">
+          <path data-kind="relationship" data-object-id="r1" data-status="rewired" data-signature="call:upload" data-from="uploader" data-to="retry" d="M 168 64 V 112"/>
+          <path data-kind="relationship" data-object-id="r2" data-status="added" data-signature="call:send" data-from="retry" data-to="client" d="M 168 176 V 224"/>
+          <rect class="mask" x="176" y="80" width="84" height="16"/>
+          <text class="lbl" x="180" y="92">r1 · REWIRED</text>
+          <rect class="mask" x="176" y="192" width="68" height="16"/>
+          <text class="lbl" x="180" y="204">r2 · ADDED</text>
+          <g data-kind="component" data-object-id="uploader" data-status="changed" data-signature="uploader:withRetry">
+            <rect data-role="bounds" x="96" y="0" width="144" height="64"/>
+            <text class="k" x="108" y="15">Δ uploader · CHANGED</text>
+            <text x="108" y="36">Uploader</text>
+            <text class="sl" x="108" y="53">withRetry</text>
+          </g>
+          <g data-kind="component" data-object-id="retry" data-status="added" data-signature="retry:3x">
+            <rect data-role="bounds" x="96" y="112" width="144" height="64"/>
+            <text class="k" x="108" y="127">+ retry · ADDED</text>
+            <text x="108" y="148">Retry</text>
+            <text class="sl" x="108" y="165">retry.ts</text>
+          </g>
+          <g data-kind="component" data-object-id="client" data-status="unchanged" data-signature="http:v1">
+            <rect data-role="bounds" x="96" y="224" width="144" height="64"/>
+            <text class="k" x="108" y="239">= client · UNCHANGED</text>
+            <text x="108" y="260">HTTP client</text>
+            <text class="sl" x="108" y="277">api.ts</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <p class="scroll-hint">Scroll sideways to compare both snapshots and the ledger.</p>
+    <p class="legend"><span><i class="swatch"></i>= Unchanged</span><span><i class="swatch added"></i>+ Added</span><span><i class="swatch deleted dashed"></i>− Removed</span><span><i class="swatch modified"></i>Δ Changed</span><span><i class="swatch dotted"></i>↔ Moved</span><span>Dash-dot line: rewired</span></p>
+    <!-- Mermaid graph, the alternative. -->
     <div class="diagram">
       <div class="controls">
         <button data-zoom="1.25" title="Zoom in"><svg class="icon"><use href="#i-plus"/></svg></button>
