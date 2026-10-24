@@ -9,6 +9,9 @@ import { join } from "node:path";
 const root = import.meta.dirname;
 const MARKETPLACE = join(root, ".claude-plugin/marketplace.json");
 const CODEX_MARKETPLACE = join(root, ".agents/plugins/marketplace.json");
+// grug-review ships a copy of the grug agent's rules for installs without agents.
+const GRUG_AGENT = ".agents/agents/grug.md";
+const GRUG_RULES = ".agents/skills/grug-review/rules.md";
 
 const readJson = (path: string): unknown => JSON.parse(readFileSync(path, "utf8"));
 
@@ -50,8 +53,8 @@ function set(record: Record<string, unknown>, key: string, value: string): boole
   return true;
 }
 
-// Sync every manifest to package.json and marketplace.json, returning the
-// files that were out of date. With write false, only report them.
+// Sync every manifest to package.json and marketplace.json, and grug-review's
+// rules to the grug agent, returning the files that were out of date. With write false, only report them.
 function sync(write: boolean): { version: string; changed: string[] } {
   const pkg = readJson(join(root, "package.json"));
   if (!isRecord(pkg)) throw new Error("package.json: must be an object");
@@ -89,6 +92,13 @@ function sync(write: boolean): { version: string; changed: string[] } {
     changed.push(".agents/plugins/marketplace.json");
   }
 
+  const rules = readFileSync(join(root, GRUG_AGENT), "utf8").replace(/^---\n[\s\S]*?\n---\n+/, "");
+  const rulesPath = join(root, GRUG_RULES);
+  if (!existsSync(rulesPath) || readFileSync(rulesPath, "utf8") !== rules) {
+    if (write) writeFileSync(rulesPath, rules);
+    changed.push(GRUG_RULES);
+  }
+
   return { version, changed };
 }
 
@@ -112,7 +122,8 @@ function check(): void {
 
 const USAGE = `usage: cli <command>
 
-  version      Propagate version and description into every plugin manifest
+  version      Propagate version and description into every plugin manifest,
+               and the grug agent's rules into grug-review
   check        Fail if any manifest is out of date`;
 
 const [command] = process.argv.slice(2);
