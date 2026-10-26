@@ -1,7 +1,7 @@
 {
   "name": "ds",
   "version": "0.1.0",
-  "description": "Size-based specs, grug-style code review, visual HTML PR overviews, and standalone diagrams a tired developer can follow at 3 AM.",
+  "description": "Size-based specs, grug-style code review, visual HTML PR overviews, standalone diagrams, and memory consolidation.",
   "author": {
     "name": "Dzianis Sheka"
   },

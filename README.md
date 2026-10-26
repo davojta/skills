@@ -6,6 +6,7 @@
 | [`grug-review`](.agents/skills/grug-review/SKILL.md) | Review a diff for proven bugs and for code a tired developer cannot follow at 3 AM. Small diffs (1–15 files) go to one `grug` agent on opus; big ones go to parallel `grug` agents on sonnet, one per batch. Inspired by [`grug-review`](https://github.com/stepankuzmin/skills/blob/main/.agents/skills/grug-review/SKILL.md) and [The Grug Brained Developer](https://grugbrain.dev/). |
 | [`visual-review`](.agents/skills/visual-review/SKILL.md) | One-page HTML overview of a PR with diagrams, before/after code, and a grug review. Adapted from [visual-explainer](https://github.com/nicobailon/visual-explainer) by Nico Bailon. |
 | [`diagram-design`](.agents/skills/diagram-design/SKILL.md) | One standalone HTML page with an inline SVG diagram or chart: architecture, flowchart, sequence, data flow, timeline, bar, waterfall, line, heatmap, scatter, sankey. Adapted from [diagram-design](https://github.com/cathrynlavery/diagram-design) by Cathryn Lavery. |
+| [`dream`](.agents/skills/dream/SKILL.md) | Memory consolidation: mines recent Claude Code sessions for corrections, preferences and decisions, then proposes edits to your global memory and applies the ones you approve. |
 
 Agent:
 
@@ -22,7 +23,7 @@ It rates findings with 12 pains (checked against *A Philosophy of Software Desig
 
 ## Install
 
-Claude Code and Codex install the whole `ds` plugin: `spec`, `grug-review`, `visual-review`, `diagram-design`, and the `grug` agent. Only the Skills CLI can install a single skill.
+Claude Code and Codex install the whole `ds` plugin: `spec`, `grug-review`, `visual-review`, `diagram-design`, `dream`, and the `grug` agent. Only the Skills CLI can install a single skill.
 
 ### spec only
 
@@ -54,6 +55,14 @@ Skills CLI:
 
 ```bash
 npx skills add davojta/skills --skill diagram-design
+```
+
+### dream only
+
+Skills CLI:
+
+```bash
+npx skills add davojta/skills --skill dream
 ```
 
 ### Whole plugin
