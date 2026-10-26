@@ -1,7 +1,7 @@
 {
   "name": "ds",
   "version": "0.1.0",
-  "description": "Size-based specs, grug-style code review, visual HTML PR overviews, standalone diagrams, and memory consolidation.",
+  "description": "Size-based specs, grug-style code review, visual HTML PR overviews, standalone diagrams, memory consolidation, and PR evidence scripts.",
   "author": {
     "name": "Dzianis Sheka",
     "url": "https://github.com/davojta"

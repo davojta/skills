@@ -8,7 +8,7 @@
     {
       "name": "ds",
       "source": "./.agents",
-      "description": "Size-based specs, grug-style code review, visual HTML PR overviews, standalone diagrams, and memory consolidation."
+      "description": "Size-based specs, grug-style code review, visual HTML PR overviews, standalone diagrams, memory consolidation, and PR evidence scripts."
     }
   ]
 }
