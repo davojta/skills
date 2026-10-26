@@ -7,6 +7,7 @@
 | [`visual-review`](.agents/skills/visual-review/SKILL.md) | One-page HTML overview of a PR with diagrams, before/after code, and a grug review. Adapted from [visual-explainer](https://github.com/nicobailon/visual-explainer) by Nico Bailon. |
 | [`diagram-design`](.agents/skills/diagram-design/SKILL.md) | One standalone HTML page with an inline SVG diagram or chart: architecture, flowchart, sequence, data flow, timeline, bar, waterfall, line, heatmap, scatter, sankey. Adapted from [diagram-design](https://github.com/cathrynlavery/diagram-design) by Cathryn Lavery. |
 | [`dream`](.agents/skills/dream/SKILL.md) | Memory consolidation: mines recent Claude Code sessions for corrections, preferences and decisions, then proposes edits to your global memory and applies the ones you approve. |
+| [`showboat-evidence`](.agents/skills/showboat-evidence/SKILL.md) | After a task, write a runnable [Showboat](https://github.com/simonw/showboat) script that proves each acceptance criterion, for you to run and post as PR evidence. |
 
 Agent:
 
@@ -23,7 +24,7 @@ It rates findings with 12 pains (checked against *A Philosophy of Software Desig
 
 ## Install
 
-Claude Code and Codex install the whole `ds` plugin: `spec`, `grug-review`, `visual-review`, `diagram-design`, `dream`, and the `grug` agent. Only the Skills CLI can install a single skill.
+Claude Code and Codex install the whole `ds` plugin: `spec`, `grug-review`, `visual-review`, `diagram-design`, `dream`, `showboat-evidence`, and the `grug` agent. Only the Skills CLI can install a single skill.
 
 ### spec only
 
