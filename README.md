@@ -17,7 +17,7 @@ It rates findings with 12 pains (checked against *A Philosophy of Software Desig
 - [stepankuzmin/skills#7c3fa2c0275bcee7c1633a3ab6b0374e1a059b6e](https://github.com/stepankuzmin/skills/tree/7c3fa2c0275bcee7c1633a3ab6b0374e1a059b6e/.agents): repo layout, `cli.ts`, `grug` agent; `grug-review` adapts its `grug-review` skill
 - Stepan Kuzmin's `grug` Claude Code plugin: the big-review batching flow
 - [nicobailon/visual-explainer](https://github.com/nicobailon/visual-explainer): `visual-review` layout, Mermaid zoom, and section structure (MIT)
-- [cathrynlavery/diagram-design#0b9b10c](https://github.com/cathrynlavery/diagram-design/tree/0b9b10cab3dbf695642fa1a6c4b4f60df9083689/skills/diagram-design): `visual-review` architecture delta diagram and verifier, plus `diagram-types/` reference files for flowchart, data-flow, timeline, bar, heatmap, sequence, line, sankey (MIT)
+- [cathrynlavery/diagram-design#0b9b10c](https://github.com/cathrynlavery/diagram-design/tree/0b9b10cab3dbf695642fa1a6c4b4f60df9083689/skills/diagram-design): `visual-review` architecture delta diagram and verifier, plus `diagram-types/` reference files for flowchart, data-flow, timeline, bar, heatmap, sequence, line, sankey, scatter, waterfall, architecture (MIT)
 
 ## Install
 
