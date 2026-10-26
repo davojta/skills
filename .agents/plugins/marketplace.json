@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "ds",
-      "description": "Size-based specs, grug-style code review, visual HTML PR overviews, standalone diagrams, and memory consolidation.",
+      "description": "Size-based specs, grug-style code review, visual HTML PR overviews, standalone diagrams, memory consolidation, and cyclomatic complexity checks.",
       "source": {
         "source": "local",
         "path": "./.agents"
