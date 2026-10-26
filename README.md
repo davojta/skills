@@ -7,6 +7,7 @@
 | [`visual-review`](.agents/skills/visual-review/SKILL.md) | One-page HTML overview of a PR with diagrams, before/after code, and a grug review. Adapted from [visual-explainer](https://github.com/nicobailon/visual-explainer) by Nico Bailon. |
 | [`diagram-design`](.agents/skills/diagram-design/SKILL.md) | One standalone HTML page with an inline SVG diagram or chart: architecture, flowchart, sequence, data flow, timeline, bar, waterfall, line, heatmap, scatter, sankey. Adapted from [diagram-design](https://github.com/cathrynlavery/diagram-design) by Cathryn Lavery. |
 | [`dream`](.agents/skills/dream/SKILL.md) | Memory consolidation: mines recent Claude Code sessions for corrections, preferences and decisions, then proposes edits to your global memory and applies the ones you approve. |
+| [`lizard`](.agents/skills/lizard/SKILL.md) | Run `lizard` cyclomatic complexity analysis on the changed files (or paths you pass) and list the functions over the CCN, length and argument thresholds. |
 
 Agent:
 
@@ -23,7 +24,7 @@ It rates findings with 12 pains (checked against *A Philosophy of Software Desig
 
 ## Install
 
-Claude Code and Codex install the whole `ds` plugin: `spec`, `grug-review`, `visual-review`, `diagram-design`, `dream`, and the `grug` agent. Only the Skills CLI can install a single skill.
+Claude Code and Codex install the whole `ds` plugin: `spec`, `grug-review`, `visual-review`, `diagram-design`, `dream`, `lizard`, and the `grug` agent. Only the Skills CLI can install a single skill.
 
 ### spec only
 
