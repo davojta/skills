@@ -72,6 +72,8 @@ Follow the `grug-review` skill in this plugin (`.agents/skills/grug-review/SKILL
 | Tests | Optional. Test files touched and missing critical coverage. |
 | Decisions | Optional. Only if 2 or more. Decision, why, alternative. |
 
+For a chart or any figure beyond the architecture delta and the Mermaid flow, use `/ds:diagram-design`.
+
 Architecture delta rules:
 
 - Rules and the data-attribute contract: `architecture-delta.md`. Copy the block from `template.html`.

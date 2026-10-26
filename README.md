@@ -5,6 +5,7 @@
 | [`spec`](.agents/skills/spec/SKILL.md) | Size a change (simple / smol / medium / big) and write only the spec docs that fit it. |
 | [`grug-review`](.agents/skills/grug-review/SKILL.md) | Review a diff for proven bugs and for code a tired developer cannot follow at 3 AM. Small diffs (1–15 files) go to one `grug` agent on opus; big ones go to parallel `grug` agents on sonnet, one per batch. Inspired by [`grug-review`](https://github.com/stepankuzmin/skills/blob/main/.agents/skills/grug-review/SKILL.md) and [The Grug Brained Developer](https://grugbrain.dev/). |
 | [`visual-review`](.agents/skills/visual-review/SKILL.md) | One-page HTML overview of a PR with diagrams, before/after code, and a grug review. Adapted from [visual-explainer](https://github.com/nicobailon/visual-explainer) by Nico Bailon. |
+| [`diagram-design`](.agents/skills/diagram-design/SKILL.md) | One standalone HTML page with an inline SVG diagram or chart: architecture, flowchart, sequence, data flow, timeline, bar, waterfall, line, heatmap, scatter, sankey. Adapted from [diagram-design](https://github.com/cathrynlavery/diagram-design) by Cathryn Lavery. |
 
 Agent:
 
@@ -17,11 +18,11 @@ It rates findings with 12 pains (checked against *A Philosophy of Software Desig
 - [stepankuzmin/skills#7c3fa2c0275bcee7c1633a3ab6b0374e1a059b6e](https://github.com/stepankuzmin/skills/tree/7c3fa2c0275bcee7c1633a3ab6b0374e1a059b6e/.agents): repo layout, `cli.ts`, `grug` agent; `grug-review` adapts its `grug-review` skill
 - Stepan Kuzmin's `grug` Claude Code plugin: the big-review batching flow
 - [nicobailon/visual-explainer](https://github.com/nicobailon/visual-explainer): `visual-review` layout, Mermaid zoom, and section structure (MIT)
-- [cathrynlavery/diagram-design#0b9b10c](https://github.com/cathrynlavery/diagram-design/tree/0b9b10cab3dbf695642fa1a6c4b4f60df9083689/skills/diagram-design): `visual-review` architecture delta diagram and verifier, plus `diagram-types/` reference files for flowchart, data-flow, timeline, bar, heatmap, sequence, line, sankey, scatter, waterfall, architecture (MIT)
+- [cathrynlavery/diagram-design#0b9b10c](https://github.com/cathrynlavery/diagram-design/tree/0b9b10cab3dbf695642fa1a6c4b4f60df9083689/skills/diagram-design): `visual-review` architecture delta diagram and verifier, plus `diagram-design` and its `types/` reference files for flowchart, data-flow, timeline, bar, heatmap, sequence, line, sankey, scatter, waterfall, architecture (MIT)
 
 ## Install
 
-Claude Code and Codex install the whole `ds` plugin: `spec`, `grug-review`, `visual-review`, and the `grug` agent. Only the Skills CLI can install a single skill.
+Claude Code and Codex install the whole `ds` plugin: `spec`, `grug-review`, `visual-review`, `diagram-design`, and the `grug` agent. Only the Skills CLI can install a single skill.
 
 ### spec only
 
@@ -45,6 +46,14 @@ Skills CLI:
 
 ```bash
 npx skills add davojta/skills --skill visual-review
+```
+
+### diagram-design only
+
+Skills CLI:
+
+```bash
+npx skills add davojta/skills --skill diagram-design
 ```
 
 ### Whole plugin

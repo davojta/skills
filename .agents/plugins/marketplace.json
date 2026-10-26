@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "ds",
-      "description": "Size-based specs, grug-style code review, and visual HTML PR overviews a tired developer can follow at 3 AM.",
+      "description": "Size-based specs, grug-style code review, visual HTML PR overviews, and standalone diagrams a tired developer can follow at 3 AM.",
       "source": {
         "source": "local",
         "path": "./.agents"

@@ -1,7 +1,7 @@
 {
   "name": "ds",
   "version": "0.1.0",
-  "description": "Size-based specs, grug-style code review, and visual HTML PR overviews a tired developer can follow at 3 AM.",
+  "description": "Size-based specs, grug-style code review, visual HTML PR overviews, and standalone diagrams a tired developer can follow at 3 AM.",
   "author": {
     "name": "Dzianis Sheka",
     "url": "https://github.com/davojta"
@@ -21,7 +21,7 @@
   "interface": {
     "displayName": "Dzianis Sheka Skills",
     "shortDescription": "Size-based specs and grug-style code review",
-    "longDescription": "Spec sizes a change and writes only the spec docs that fit it, from a plan to research, proposal, design, tasks, and validation. Grug review checks a diff for proven bugs and for code a tired developer cannot follow at 3 AM, and splits big diffs across parallel grug agents. The grug agent gives a simplicity second opinion. Visual review builds a one-page HTML overview of a pull request.",
+    "longDescription": "Spec sizes a change and writes only the spec docs that fit it, from a plan to research, proposal, design, tasks, and validation. Grug review checks a diff for proven bugs and for code a tired developer cannot follow at 3 AM, and splits big diffs across parallel grug agents. The grug agent gives a simplicity second opinion. Visual review builds a one-page HTML overview of a pull request. Diagram design draws one standalone HTML diagram or chart.",
     "developerName": "Dzianis Sheka",
     "category": "Developer Tools",
     "capabilities": [
